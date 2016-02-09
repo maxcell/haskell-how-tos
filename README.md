@@ -162,13 +162,15 @@ This is a methodology you can do for testing your functions correctness on the f
 ### Testing using Suites
 Now you probably are here for this one out of everything else. A simple way of testing your code with what Professor Wocjan is to put all of the necessary files in the same directory (an example of this can be seen in [testing](https://github.com/maxcell/haskell-how-tos/tree/master/testing)).
 
-If you check the testing file that you are trying to use so for instance `PolygonAreaTests.hs`. You can see at the top it is trying to import these modules:
+The biggest thing we need as far as making progress in testing is reading what is necessary for our particular test file. We notice that we were given an import file `Testing.lhs`. This is the backbone to all our testing in this class. We need to be sure to at least have this file in the same directory as whatever file we are given as far as a test.
+
+If you check the testing file that you are trying to use so, for instance `PolygonAreaTests.hs`. You can see at the top it is trying to import these modules:
 ```haskell
 import PolygonArea
 import Testing
 import FloatTesting
 ```
-This means we need to be sure to have these loaded in properly or have them in the same directory to allow Haskell to do our testing.
+This means we need to be sure to have these loaded in properly or have them in the same directory to allow Haskell to do our testing. So we want to be sure that the `testing/` directory has all of these files so `testing/PolygonArea.hs`, `testing/Testing.lhs`, `testing/FloatTesting.hs` are within the same folder and then we can just move over to that directory.
 
 So once you move everything within the same directory or perform your preferred method of loading in modules whether it is `ghci <module>` or loading up `ghci` and running `:l <module>`, you should see:
 ```haskell
