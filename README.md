@@ -8,6 +8,7 @@ Here is what our current topics are:
 - [Installing Haskell (Linux)](#installing-haskell-linux)
 - [How To Haskell](#how-to-haskell)
 - [Testing By Hand](#testing-by-hand)
+- [Testing Using Suites](#testing-using-suites)
 
 ### Installing Haskell (OSX)
 If you run OSX, you can install Haskell simply by running an awesome and simple command through [Homebrew](http://brew.sh/)(if you don't have this now, please get it because this will do a great job for you as far as package manager)
@@ -115,6 +116,10 @@ Let's say I have the script from earlier and if you close this repo down it will
 GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
 Prelude> :l maximum.hs
 ```
+So here we notice that the `:l` command loads in whatever script we want to give it and it just finds it from the current directory (we can access files from other directories as well similar to how we navigate through terminal).
+
+You can also do the same thing by just simply having `ghci maximum.hs` and it will load up the script into ghci along with it booting up.
+
 And it will now look like:
 ```haskell
 GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
@@ -143,3 +148,7 @@ It whines and says that we do not have a correct value in here for our function 
 *Maximum> maximum [4]
 4
 ```
+
+This is a methodology you can do for testing your functions correctness on the fly. You just load the appropriate modules and then interact with the Haskell as you go. You also can use the `:r` command to reload your scripts to allow for it to receive changes you made into them.
+
+### Testing using Suites
