@@ -7,6 +7,7 @@ Here is what our current topics are:
 - [Installing Haskell (Windows)](#installing-haskell-windows)
 - [Installing Haskell (Linux)](#installing-haskell-linux)
 - [How To Haskell](#how-to-haskell)
+- [Testing](#testing)
 
 ### Installing Haskell (OSX)
 If you run OSX, you can install Haskell simply by running an awesome and simple command through [Homebrew](http://brew.sh/)(if you don't have this now, please get it because this will do a great job for you as far as package manager)
@@ -32,6 +33,8 @@ As we already know, Haskell is a purely functional language. Languages that are 
 
 From here, I actually am going to utilize an example from Professor Wocjan until I can write more to make things more understandable. You can find the code [here](https://bitbucket.org/schneider128k/2016-spring-cop4020/src/5994bdf94842c95959de801c36a1bd82e06f3d79/1_lectures/basic-haskell/0_basic-stuff/Maximum.hs?at=master&fileviewer=file-view-default) but I am also going to go out of my way to explaining it piece by piece.
 
+You should code this up in your favorite text editor.
+
 ```haskell
 module Maximum where
 
@@ -46,4 +49,55 @@ maximum (x:xs)  = max x (maximum xs)
 -- -> max 1 (maximum [2,3])
 -- -> max 1 (max 2 (maximum [3]))
 --
+```
+
+The biggest thing about this code before we get started is that this particular methodology of writing the different states that it could appear as, is the pattern matching technique. It is a way to sort of write out all the cases that you wish for the function to handle.
+
+```haskell
+module Maximum where
+-- We are letting Haskell know that we are within a module called `Maximum`
+-- and that we are going to be giving more instructions after this
+```
+```haskell
+import Prelude hiding (maximum)
+-- From my understanding it helps remove ambiguity from the Haskell
+-- compiler as it will bring about a compile-time error
+-- This is especially necessary since we are technically redefining
+-- the maximum function that already exists.
+```
+```haskell
+maximum :: (Ord a) => [a] -> a
+-- Essentially our function, we are telling it what it needs and
+-- what it is being constrained by. So we are telling the compiler
+-- `a` needs to be contrained to be a value that has some ability of -- being 'Ordered'. So it can be something >, <, == .
+--
+-- From there we are saying that there is a list of `a` as far as an -- input and it should return a single ordered `a`
+```
+```haskell
+maximum []      = error "empty list"
+-- Here we are performing our first test, seeing whether or not
+-- the list is empty, if so, throw an error and say the list is empty.
+```
+```haskell
+maximum [x]     = x
+-- Here we are telling the program another case, we are saying:
+-- If there is a single value within in our list, by definition
+-- it is considered to be the maximum value.
+```haskell
+maximum (x:xs)  = max x (maximum xs)
+-- Here is what we really care about though and this is probably
+-- going to be the hardest thing to explain. We are going to have a
+-- list combined of the head (x) and the rest of the list (xs) and
+-- we are going to compare the current head and the rest of the list
+-- until we can find a maximum and so this actually uses a tad of
+-- recursion to figure out. But it will keep stepping through to
+-- find the maximum of the list.
+
+-- Now you are probably asking why would we want it this way, well
+-- really, this is just an implementation of the function that
+-- already exists within Haskell and so this is just a demonstration -- of how the language works.
+
+-- However, notice, we do not have any variables in this program.
+-- It is all just a state from what we were given. It just has a
+-- different representation for it.
 ```
