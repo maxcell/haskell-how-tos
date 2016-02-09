@@ -152,8 +152,17 @@ It whines and says that we do not have a correct value in here for our function 
 This is a methodology you can do for testing your functions correctness on the fly. You just load the appropriate modules and then interact with the Haskell as you go. You also can use the `:r` command to reload your scripts to allow for it to receive changes you made into them.
 
 ### Testing using Suites
-Now you probably are here for this one out of everything else. A simple way of testing your code with what Professor Wocjan is to put all of the necessary files in the same directory (an example of this can be seen in [testing]()) and once that is done, you load in the testing file and it should properly load everything once ran.
-So once you perform your preferred method of loading in modules whether it is `ghci <module>` or loading up `ghci` and running `:l <module>`, you should see:
+Now you probably are here for this one out of everything else. A simple way of testing your code with what Professor Wocjan is to put all of the necessary files in the same directory (an example of this can be seen in [testing](https://github.com/maxcell/haskell-how-tos/tree/master/testing)).
+
+If you check the testing file that you are trying to use so for instance `PolygonAreaTests.hs`. You can see at the top it is trying to import these modules:
+```haskell
+import PolygonArea
+import Testing
+import FloatTesting
+```
+This means we need to be sure to have these loaded in properly or have them in the same directory to allow Haskell to do our testing.
+
+So once you move everything within the same directory or perform your preferred method of loading in modules whether it is `ghci <module>` or loading up `ghci` and running `:l <module>`, you should see:
 ```haskell
 GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
 [1 of 4] Compiling Testing          ( Testing.lhs, interpreted )
