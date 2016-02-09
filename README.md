@@ -70,9 +70,11 @@ import Prelude hiding (maximum)
 maximum :: (Ord a) => [a] -> a
 -- Essentially our function, we are telling it what it needs and
 -- what it is being constrained by. So we are telling the compiler
--- `a` needs to be contrained to be a value that has some ability of -- being 'Ordered'. So it can be something >, <, == .
+-- `a` needs to be constrained to be a value that has some ability of
+-- being 'Ordered'. So it can be something >, <, == .
 --
--- From there we are saying that there is a list of `a` as far as an -- input and it should return a single ordered `a`
+-- From there we are saying that there is a list of `a` as far as an
+-- input and it should return a single ordered `a`
 ```
 ```haskell
 maximum []      = error "empty list"
@@ -126,7 +128,7 @@ Ok, modules loaded: Maximum.
 *Maximum>
 ```
 
-You can also do the same thing by just simply having `ghci maximum.hs` and it will load up the script into ghci along with it booting up.
+You can also do the same thing by just simply having `ghci maximum.hs` and it will load up the script into `ghci` along with it booting up.
 ```haskell
 GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
 [1 of 1] Compiling Maximum          ( maximum.hs, interpreted )
