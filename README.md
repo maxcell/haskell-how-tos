@@ -86,6 +86,7 @@ maximum [x]     = x
 -- Here we are telling the program another case, we are saying:
 -- If there is a single value within in our list, by definition
 -- it is considered to be the maximum value.
+```
 ```haskell
 maximum (x:xs)  = max x (maximum xs)
 -- Here is what we really care about though and this is probably
