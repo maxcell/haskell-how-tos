@@ -7,7 +7,7 @@ Here is what our current topics are:
 - [Installing Haskell (Windows)](#installing-haskell-windows)
 - [Installing Haskell (Linux)](#installing-haskell-linux)
 - [How To Haskell](#how-to-haskell)
-- [Testing](#testing)
+- [Testing By Hand](#testing-by-hand)
 
 ### Installing Haskell (OSX)
 If you run OSX, you can install Haskell simply by running an awesome and simple command through [Homebrew](http://brew.sh/)(if you don't have this now, please get it because this will do a great job for you as far as package manager)
@@ -100,4 +100,46 @@ maximum (x:xs)  = max x (maximum xs)
 -- However, notice, we do not have any variables in this program.
 -- It is all just a state from what we were given. It just has a
 -- different representation for it.
+```
+
+### Testing By Hand
+This is probably going to be one of the most referred sections here beyond the explanations that I will try to work on (or if you feel so inclined you can do yourself, and help the class).
+
+In Haskell, really the best things we can do is test our code by ourself and understand how and why something might not work. If you want to try it out in the interactive mode just open up your `ghci` where it is through an application or terminal. and it will bring up some variation of:
+```haskell
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude>
+```
+Let's say I have the script from earlier and if you close this repo down it will be `maximum.hs`, you can then run this new command:
+```haskell
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude> :l maximum.hs
+```
+And it will now look like:
+```haskell
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude> :l maximum.hs
+[1 of 1] Compiling Maximum          ( maximum.hs, interpreted )
+Ok, modules loaded: Maximum.
+*Maximum>
+```
+As you can notice now, you wsee the `Prelude> ` has now changed to `*Maximum> `. This shows we are in the proper location for our testing. And so we can run the `maximum` function with any **lists** of *Ordering*.
+```haskell
+*Maximum> maximum [1,4,3,7,22,3]
+22
+```
+Notice what happens when we do not have a list:
+```haskell
+*Maximum> maximum 4
+
+<interactive>:4:1:
+    Non type-variable argument in the constraint: Num [a]
+    (Use FlexibleContexts to permit this)
+    When checking that ‘it’ has the inferred type
+      it :: forall a. (Num [a], Ord a) => a
+```
+It whines and says that we do not have a correct value in here for our function to understand. This is because we gave it a single value which is different from when we give `[4]`:
+```haskell
+*Maximum> maximum [4]
+4
 ```
