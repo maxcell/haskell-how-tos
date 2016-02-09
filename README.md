@@ -117,9 +117,6 @@ GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
 Prelude> :l maximum.hs
 ```
 So here we notice that the `:l` command loads in whatever script we want to give it and it just finds it from the current directory (we can access files from other directories as well similar to how we navigate through terminal).
-
-You can also do the same thing by just simply having `ghci maximum.hs` and it will load up the script into ghci along with it booting up.
-
 And it will now look like:
 ```haskell
 GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
@@ -128,7 +125,16 @@ Prelude> :l maximum.hs
 Ok, modules loaded: Maximum.
 *Maximum>
 ```
-As you can notice now, you wsee the `Prelude> ` has now changed to `*Maximum> `. This shows we are in the proper location for our testing. And so we can run the `maximum` function with any **lists** of *Ordering*.
+
+You can also do the same thing by just simply having `ghci maximum.hs` and it will load up the script into ghci along with it booting up.
+```haskell
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[1 of 1] Compiling Maximum          ( maximum.hs, interpreted )
+Ok, modules loaded: Maximum.
+*Maximum>
+```
+
+As you can notice now, you see the `Prelude> ` has now changed to `*Maximum> `. This shows we are in the proper location for our testing. And so we can run the `maximum` function with any **lists** of *Ordering*.
 ```haskell
 *Maximum> maximum [1,4,3,7,22,3]
 22
