@@ -152,3 +152,58 @@ It whines and says that we do not have a correct value in here for our function 
 This is a methodology you can do for testing your functions correctness on the fly. You just load the appropriate modules and then interact with the Haskell as you go. You also can use the `:r` command to reload your scripts to allow for it to receive changes you made into them.
 
 ### Testing using Suites
+Now you probably are here for this one out of everything else. A simple way of testing your code with what Professor Wocjan is to put all of the necessary files in the same directory (an example of this can be seen in [testing]()) and once that is done, you load in the testing file and it should properly load everything once ran.
+So once you perform your preferred method of loading in modules whether it is `ghci <module>` or loading up `ghci` and running `:l <module>`, you should see:
+```haskell
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+[1 of 4] Compiling Testing          ( Testing.lhs, interpreted )
+[2 of 4] Compiling FloatTesting     ( FloatTesting.hs, interpreted )
+[3 of 4] Compiling PolygonArea      ( PolygonArea.hs, interpreted )
+[4 of 4] Compiling PolgonAreaTests  ( PolygonAreaTests.hs, interpreted )
+Ok, modules loaded: PolgonAreaTests, PolygonArea, Testing, FloatTesting.
+*PolgonAreaTests>
+```
+And now we can see some of the stuff within the file that has been made for us to test with:
+```haskell
+*PolgonAreaTests> square
+[(1.5,0.0),(3.5,0.0),(3.5,2.0),(1.5,2.0)]
+*PolgonAreaTests> triangle
+[(1.566,3.0),(0.0,0.0),(2.0,0.0)]
+*PolgonAreaTests> pent
+[(0.0,0.0),(1.0,-2.5),(10.2,20.0),(5.0,15.0),(1.0,30.0)]
+*PolgonAreaTests>
+```
+So we can run our test manually through each one:
+```haskell
+*PolgonAreaTests> computeArea square
+4.0
+*PolgonAreaTests> computeArea triangle
+3.0
+*PolgonAreaTests> computeArea pent
+116.75
+```
+Or you can do the efficient way and see:
+```haskell
+*PolgonAreaTests> tests
+Trying 'computeArea []' to see if it throws an exception...
+No error, because: Error.
+Trying 'computeArea [(0x600d,0xf00d)]' to see if it throws an exception...
+No error, because: Error.
+4.0
+      ~=~ 4.0
+3.0
+      ~=~ 3.0
+2.0
+      ~=~ 2.0
+21.0
+      ~=~ 21.0
+165.75
+      ~=~ 165.75
+116.75
+      ~=~ 116.75
+149.40800000000002
+      ~=~ 149.408
+3.1415719827794306
+      ~=~ 3.1415719827794306
+0
+```
