@@ -204,7 +204,9 @@ So we can run our test manually through each one:
 ```
 Or you can do the efficient way and see:
 ```haskell
-*PolgonAreaTests> tests
+*PolgonAreaTests> main
+
+Testing PolygonAreaTests v1.2...
 Trying 'computeArea []' to see if it throws an exception...
 No error, because: Error.
 Trying 'computeArea [(0x600d,0xf00d)]' to see if it throws an exception...
@@ -225,5 +227,5 @@ No error, because: Error.
       ~=~ 149.408
 3.1415719827794306
       ~=~ 3.1415719827794306
-0
+Finished with 0 failures!
 ```
