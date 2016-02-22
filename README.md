@@ -240,7 +240,7 @@ damage our systems, [Bobby Droptables](https://xkcd.com/327/) would disagree tho
 With Haskell, even though we have a library for regular expressions in existence we
 actually are going to be breaking down piece by piece.
 
-Referring to [Wocjan's Regular Expression base](https://bitbucket.org/schneider128k/2016-spring-cop4020/src/db8292a754cd00d0cd4d8606dca233e0803f2115/1_lectures/basic-haskell/3_higher-order-func/RegularExpressions.hs?at=master&fileviewer=file-view-default):
+Referring to [Professor Wocjan's Regular Expression base](https://bitbucket.org/schneider128k/2016-spring-cop4020/src/db8292a754cd00d0cd4d8606dca233e0803f2115/1_lectures/basic-haskell/3_higher-order-func/RegularExpressions.hs?at=master&fileviewer=file-view-default):
 
 ```haskell
 import Prelude hiding ((<*>))
