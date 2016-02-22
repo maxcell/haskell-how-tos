@@ -9,6 +9,7 @@ Here is what our current topics are:
 - [How To Haskell](#how-to-haskell)
 - [Testing By Hand](#testing-by-hand)
 - [Testing Using Suites](#testing-using-suites)
+- [Regular Expressions](#regular-expressions)
 
 ### Installing Haskell (OSX)
 If you run OSX, you can install Haskell simply by running an awesome and simple command through [Homebrew](http://brew.sh/)(if you don't have this now, please get it because this will do a great job for you as far as package manager)
@@ -229,3 +230,6 @@ No error, because: Error.
       ~=~ 3.1415719827794306
 Finished with 0 failures!
 ```
+
+### Regular Expressions
+**Coming Soon!**
