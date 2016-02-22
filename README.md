@@ -232,4 +232,187 @@ Finished with 0 failures!
 ```
 
 ### Regular Expressions
-**Coming Soon!**
+A beast of enormous proportions. The big baddy but is useful to us all whether we recognize it or not.
+
+Regular expressions are what we use to keep us from accepting strings that could
+damage our systems, [Bobby Droptables](https://xkcd.com/327/) would disagree though.
+
+With Haskell, even though we have a library for regular expressions in existence we
+actually are going to be breaking down piece by piece.
+
+Referring to [Wocjan's Regular Expression base](https://bitbucket.org/schneider128k/2016-spring-cop4020/src/db8292a754cd00d0cd4d8606dca233e0803f2115/1_lectures/basic-haskell/3_higher-order-func/RegularExpressions.hs?at=master&fileviewer=file-view-default):
+
+```haskell
+import Prelude hiding ((<*>))
+
+type RegExp = String -> Bool
+
+epsilon :: RegExp
+epsilon = (== "")
+
+char :: Char ->  RegExp
+char ch = (== [ch])
+
+(|||) :: RegExp -> RegExp -> RegExp
+(|||) e1 e2 =
+  \s -> e1 s || e2 s
+
+
+(<*>) :: RegExp -> RegExp -> RegExp
+(<*>) e1 e2 =
+  \s -> or [ e1 prefix && e2 suffix | (prefix,suffix) <- splits s]
+
+(<**>) :: RegExp -> RegExp -> RegExp
+(<**>) e1 e2 =
+  \s -> or [ e1 prefix && e2 suffix | (prefix,suffix) <- drop 1 (splits s)]
+
+star :: RegExp -> RegExp
+star p = epsilon ||| (p <**> star p)
+```
+
+Each of these things are going to be useful for us to performing regular expressions. I would like to preface this with, you should probably reference
+this document if you intend to read through it all. Just to be safe. I also would
+like to say that these are just ways of showing you how each piece is used and
+how it can be utilized. It does not explain how to do the rest of the homework.
+
+This is relatable to DFAs and regular expressions that can be seen by Computer Science students in both Discrete 2 and System Software.
+
+```haskell
+import Prelude hiding ((<*>))
+-- It is hiding the original definition to the (<*>), which actually through kcolley's
+-- explanation is why there is <*> and <**>, you should not need or use <*> unless
+-- it is through its original intention. However, if you don't want to risk anything
+-- just keep this and the new definition in as it is used in the testing
+```
+
+```haskell
+type RegExp = String -> Bool
+-- This is the crux of why it all works. Here we are describing this type that
+-- we want to exist. We want to make RegExp be a transformation of String to Bool
+-- It is a function that will return true if the string is accepted and will return
+-- false otherwise
+```
+
+```haskell
+epsilon :: RegExp -- Is simply a RegExp
+epsilon = (== "")
+-- This is the definition for epsilon, the empty string. For some definitions, you
+-- will need to account for the pattern and the empty string (epsilon).
+-- Essentially it will test for if the given input is empty, if so, it will return
+-- True, otherwise it will go and return False.
+-- We can test this if it is true by calling our pattern and giving it an input:
+
+-- We also want to be sure to set our pattern p so that way we can get it to
+-- output the correct value. This will be better shown by more examples
+
+-- We define our regular expression to only accept the empty string or epsilon
+let pattern = epsilon -- ε
+
+pattern ""  -- True
+pattern "a" -- False
+pattern "The meaning of life is 42."  
+-- Though the regular expression may be False, doesn't necessarily make my statement
+-- False
+```
+
+```haskell
+char :: Char ->  RegExp -- Takes a Char and returns a RegExp
+char ch = (== [ch])
+-- This is the definition for any element that we can take in at its basic roots,
+-- a character. This will check if we have any character as input and will return
+-- True if so, otherwise False.
+
+-- We define our regular expression to only accept strings of only 'a'
+let pattern = char 'a'  -- a
+
+pattern ""  -- False
+pattern "a" -- True
+pattern "b" -- False
+pattern "aaa" -- False  
+```
+
+```haskell
+(|||) :: RegExp -> RegExp -> RegExp -- It takes to RegExps and returns one RegExp
+(|||) e1 e2 =
+  \s -> e1 s || e2 s
+-- This actually is trying to say the ||| operator. Which is equivalent to our OR
+-- (but don't tell Dr. Gerber that I said that one). It will essentially allow us
+-- to say that either pattern can be accepted but it has to be one or the other,
+-- exclusively.
+
+let pattern = char 'a' ||| char 'b' -- (a | b)
+
+pattern ""  -- False
+pattern "a" -- True
+pattern "b" -- True
+pattern "ab" -- False
+pattern "aa" -- False
+pattern "bb" -- False
+
+-- Let's see what happens with it when we use epsilon though
+let pattern = epsilon ||| char 'a' -- (ε | a)
+pattern ""  -- True
+pattern "a" -- True
+pattern "b" -- False
+pattern "ab" -- False
+
+-- The key thing to note about this operator is that it only accepts two RegExs
+-- at a time. What if we were to combine them....
+let pattern = (epsilon ||| char 'a') ||| char 'b' -- (ε | a) | b
+pattern ""  -- True
+pattern "a" -- True
+pattern "b" -- True
+pattern "ab" -- False
+```
+
+```haskell
+(<**>) :: RegExp -> RegExp -> RegExp
+(<**>) e1 e2 =
+  \s -> or [ e1 prefix && e2 suffix | (prefix,suffix) <- drop 1 (splits s)]
+
+-- Ignoring the <*> operator as we will just use <**> to do the same thing but
+-- better. This operator is actually going to concat two patterns together
+let pattern = char 'o' <**> char 'x' -- ox
+pattern ""   -- False
+pattern "o"  -- False
+pattern "x"  -- False
+pattern "ox" -- True
+
+let pattern = ((char 'r') <**> (char 'a' ||| char 'u')) <**> char 'n' -- r(a | u)n
+pattern "" -- False
+pattern "read" -- False
+pattern "ran" -- True
+pattern "run" -- True
+pattern "raun" -- False
+```
+
+Now for `star` this will really take everything we have done and put it together:
+```haskell
+star :: RegExp -> RegExp
+star p = epsilon ||| (p <**> star p)
+
+-- So what we are saying is we will accept a pattern BUT to know if it is valid
+-- We will take the pattern concat with the function call of pattern again OR
+-- be stopped by the empty string, while also being able to be the empty string
+
+let pattern = star (char 'a') -- a*
+pattern "" -- True
+pattern "a" -- True
+pattern "aaaaaaaa" -- True
+pattern "abaaaa" -- False
+
+-- And with star we can do a bit more complex ones
+let pattern = ((char 'l' <**> char 'o') <**> star (char 'o')) <**> char 'l' -- ((lo)o*)l
+pattern "" -- False
+pattern "l" -- False
+pattern "ll" -- False
+pattern "lol" -- True
+pattern "looooooooooool" -- True
+pattern "lololol" -- False
+```
+
+Now you saw that with making sure we could do `lol` and not have `ll` we had to
+have an extra `o` in the expression. This is what the `plus` symbol will take
+care for us with, making sure we have at least `1` occurrence or as many as we want. And the `option` will allow us to define `0` or `1` occurrences.
+
+We can utilize these functions to defining `number` and `fractional` as well. However, we will also need to be sure to avoid returning any functions as their definitions are similar to epsilon and that we aren't transforming anything but a `String -> Bool`.
