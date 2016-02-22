@@ -415,4 +415,4 @@ Now you saw that with making sure we could do `lol` and not have `ll` we had to
 have an extra `o` in the expression. This is what the `plus` symbol will take
 care for us with, making sure we have at least `1` occurrence or as many as we want. And the `option` will allow us to define `0` or `1` occurrences.
 
-We can utilize these functions to defining `number` and `fractional` as well. However, we will also need to be sure to avoid returning any functions as their definitions are similar to epsilon and that we aren't transforming anything but a `String -> Bool`.
+We can utilize these functions to defining `number` and `fractional` as well. However, we will also need to be sure to avoid returning any functions as their definitions are similar to epsilon and that we aren't transforming anything but a `String -> Bool`, which is simply `RegExp`.
