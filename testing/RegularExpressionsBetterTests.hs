@@ -1,3 +1,18 @@
+-- Test Cases made by kcolley, edited by Prince to match assumptions
+-- clarified by Professor
+
+-- To run entire suite:
+-- ```
+-- $ ghci RegularExpressionsBetterTests
+-- RegularExpressionsBetterTests> runTests
+-- ```
+
+-- Or can be loaded when you are in ghci by simply:
+-- ```
+-- Prelude> :l RegularExpressionsBetterTests
+-- RegularExpressionsBetterTests> runTests 
+-- ```
+
 module RegularExpressionsBetterTests where
 
 import Prelude hiding ((<*>))
