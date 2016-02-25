@@ -8,83 +8,95 @@ import RegularExpressions
 
 -- Test legal numbers
 test_number_0 =
-  TestCase (assertEqual "number test 0" (True) (number "4"))
+  TestCase (assertEqual "number \"4\"" (True) (number "4"))
 
 test_number_1 =
-  TestCase (assertEqual "number test 1" (True) (number "123"))
+  TestCase (assertEqual "number \"123\"" (True) (number "123"))
 
 test_number_2 =
-  TestCase (assertEqual "number test 2" (True) (number "0"))
+  TestCase (assertEqual "number \"0\"" (True) (number "0"))
 
 -- Test illegal numbers
 test_number_3 =
-  TestCase (assertEqual "number test 3" (False) (number "123abc"))
+  TestCase (assertEqual "number \"123abc\"" (False) (number "123abc"))
 
 test_number_4 =
-  TestCase (assertEqual "number test 4" (False) (number "abc123"))
+  TestCase (assertEqual "number \"abc123\"" (False) (number "abc123"))
 
 test_number_5 =
-  TestCase (assertEqual "number test 5" (False) (number "0x123"))
+  TestCase (assertEqual "number \"0x123\"" (False) (number "0x123"))
 
 test_number_6 =
-  TestCase (assertEqual "number test 6" (False) (number "1e9"))
+  TestCase (assertEqual "number \"1e9\"" (False) (number "1e9"))
 
 test_number_7 =
-  TestCase (assertEqual "number test 7" (False) (number "0123"))
+  TestCase (assertEqual "number \"0123\"" (False) (number "0123"))
 
 test_number_8 =
-  TestCase (assertEqual "number test 8" (False) (number ""))
+  TestCase (assertEqual "number \"\"" (False) (number ""))
 
 
 -- Test legal fractional numbers
 test_fractional_0 =
-  TestCase (assertEqual "fractional test 0" (True) (fractional "1.2"))
+  TestCase (assertEqual "fractional \"1.2\"" (True) (fractional "1.2"))
 
 test_fractional_1 =
-  TestCase (assertEqual "fractional test 1" (True) (fractional "123.456"))
+  TestCase (assertEqual "fractional \"123.456\"" (True) (fractional "123.456"))
 
 test_fractional_2 =
-  TestCase (assertEqual "fractional test 2" (True) (fractional "10.01"))
+  TestCase (assertEqual "fractional \"10.01\"" (True) (fractional "10.01"))
 
 test_fractional_3 =
-  TestCase (assertEqual "fractional test 3" (True) (fractional "1.0"))
+  TestCase (assertEqual "fractional \"1.0\"" (True) (fractional "1.0"))
 
 test_fractional_4 =
-  TestCase (assertEqual "fractional test 4" (True) (fractional "0.1"))
+  TestCase (assertEqual "fractional \"0.1\"" (True) (fractional "0.1"))
 
 -- Test illegal fractional numbers
 test_fractional_5 =
-  TestCase (assertEqual "fractional test 4" (False) (fractional "123"))
+  TestCase (assertEqual "fractional \"123\"" (False) (fractional "123"))
 
 test_fractional_6 =
-  TestCase (assertEqual "fractional test 6" (False) (fractional "123abc.456"))
+  TestCase (assertEqual "fractional \"123abc.456\"" (False) (fractional "123abc.456"))
 
 test_fractional_7 =
-  TestCase (assertEqual "fractional test 7" (False) (fractional "123.456xyz"))
+  TestCase (assertEqual "fractional \"123.456xyz\"" (False) (fractional "123.456xyz"))
 
 test_fractional_8 =
-  TestCase (assertEqual "fractional test 8" (False) (fractional "abc123.456"))
+  TestCase (assertEqual "fractional \"abc123.456\"" (False) (fractional "abc123.456"))
 
 test_fractional_9 =
-  TestCase (assertEqual "fractional test 9" (False) (fractional "123.xyz456"))
+  TestCase (assertEqual "fractional \"123.xyz456\"" (False) (fractional "123.xyz456"))
 
 test_fractional_10 =
-  TestCase (assertEqual "fractional test 10" (False) (fractional "1.2e5"))
+  TestCase (assertEqual "fractional \"1.2e5\"" (False) (fractional "1.2e5"))
 
 test_fractional_11 =
-  TestCase (assertEqual "fractional test 11" (False) (fractional "10.00"))
+  TestCase (assertEqual "fractional \"10.00\"" (False) (fractional "10.00"))
 
 test_fractional_12 =
-  TestCase (assertEqual "fractional test 12" (False) (fractional "10.0010"))
+  TestCase (assertEqual "fractional \"10.0010\"" (False) (fractional "10.0010"))
 
 test_fractional_13 =
-  TestCase (assertEqual "fractional test 13" (False) (fractional "00.01"))
+  TestCase (assertEqual "fractional \"00.01\"" (False) (fractional "00.01"))
 
 test_fractional_14 =
-  TestCase (assertEqual "fractional test 14" (False) (fractional "0100.01"))
+  TestCase (assertEqual "fractional \"0100.01\"" (False) (fractional "0100.01"))
 
 test_fractional_15 =
-  TestCase (assertEqual "fractional test 15" (False) (fractional "."))
+  TestCase (assertEqual "fractional \".\"" (False) (fractional "."))
+
+test_fractional_16 =
+  TestCase (assertEqual "fractional \"0.10\"" (False) (fractional "0.10"))
+
+test_fractional_17 =
+  TestCase (assertEqual "fractional \"0.100000\"" (False) (fractional "0.100000"))
+
+test_fractional_18 =
+  TestCase (assertEqual "fractional \"0.000000\"" (False) (fractional "0.000000"))
+
+test_fractional_19 =
+  TestCase (assertEqual "fractional \"1.00010000\"" (False) (fractional "1.00010000"))
 
 tests = TestList [
     -- Legal Number Tests
@@ -118,7 +130,11 @@ tests = TestList [
     TestLabel "fractional number" test_fractional_12,
     TestLabel "fractional number" test_fractional_13,
     TestLabel "fractional number" test_fractional_14,
-    TestLabel "fractional number" test_fractional_15
+    TestLabel "fractional number" test_fractional_15,
+    TestLabel "fractional number" test_fractional_16,
+    TestLabel "fractional number" test_fractional_17,
+    TestLabel "fractional number" test_fractional_18,
+    TestLabel "fractional number" test_fractional_19
     ]
 
 runTests = runTestTT tests
