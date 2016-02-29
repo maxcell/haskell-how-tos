@@ -7,7 +7,14 @@
     - [Arithmetic](#arithmetic)
     - [Boolean](#boolean)
     - [Beginning With Functions](#beginning-with-functions)
-  2. Lists
+  2. [Lists](#lists)
+    - [Grabbing values from Index](#grabbing-values-from-index)
+    - [Adding onto Lists](#adding-onto-lists)
+    - [Comparing Lists](#comparing-lists)
+    - [List Functions](#list-functions)
+    - [Ranges](#ranges)
+      - [Cooler List Functions](#cooler-list-functions)
+  3. [List Comprehensions (WIP)](#list-comprehensions)
   3. Need to Know Functions
   4. Lambdas
   5. Abstract Data Types
@@ -107,7 +114,7 @@ Prelude> succ (max 9 10)    -- Note: max will return 10 and because of the (), w
 11                          -- make sure to have it execute first before succ
 ```
 
-We can write our own functions too!(We will get further into this more later.)
+We can write our own functions too! (We will get further into this more later)
 ```haskell
 -- Open up your favorite text editor and go ahead and write this out in it
 -- Save it as firstFunctions.hs and then go to terminal and writ
@@ -140,3 +147,174 @@ you can do the `ghci firstFunctions` or just `ghci` and then `:l firstFunctions`
 *Main> max (succ (halveMe (squareMe 16))) 69
 129.0
 ```
+
+### Lists
+Lists are a **homogenous** data structure. It will contain several pieces of
+data, however they must be of the same type.
+
+Note: Let allows us to define a name (or a definition) within the interactive mode.
+It has use elsewhere but this is an easy way for us to play around still while being in interactive. Otherwise, we would need to write this in a separate file and load it.
+```haskell
+Prelude> let listOfNumbers = [1, 7, 2, 4, 10, 19]
+Prelude> listOfNumbers
+[1,7,2,4,10,19]
+```
+
+Strings are actually lists of `Char`
+```haskell
+Prelude> let myName = "Prince Wilson"
+Prelude> myName
+"Prince Wilson"
+Prelude> :t myName
+[Char]
+```
+
+You can also have lists of lists:
+```haskell
+Prelude> let b = [[1,2,3], [4,5,6], [7,8,9]]
+Prelude> b
+[[1,2,3],[4,5,6],[7,8,9]]
+```
+
+#### Grabbing values from Index
+If we want to get something in a specific index, we can use `<list> !! <index>`
+```haskell
+Prelude> let listOfNumbers = [1, 7, 2, 4, 10, 19]
+Prelude> listOfNumbers !! 4
+10
+```
+
+#### Adding onto Lists
+You can add things onto a list either by `:` or `++`, however, these do two
+different things.
+
+`:` will either take a single data entry or a list of the same data entries and
+will prepend it onto another list.
+```haskell
+Prelude> 1:[]
+[1]
+Prelude> 1:2:3:4:[]
+[1,2,3,4]
+Prelude> [1,2,3]:[4,5,6]:[7,8,9]:[]
+[[1,2,3],[4,5,6],[7,8,9]]
+```
+
+`++` takes two lists and combines them. Specifically, it
+**traverses** the list on the *left* and then adds on the contents of the list
+on the right side. The reason why this is important to note is because, let's
+you have a huge list on the left, then this would take a significant amount of time. Not only that, the `++` requires that both operands are **lists**.
+```haskell
+Prelude> let listOfNumbers = [1, 7, 2, 4, 10, 19]
+Prelude> listOfNumbers ++ [1]
+[1,7,2,4,10,19,1]
+Prelude> let name = [ "Robert" , "Charles" ]
+Prelude> let fullName = name ++ ["Williamson"]
+Prelude> fullName
+["Robert","Charles","Williamson"]
+```
+
+#### Comparing Lists
+You can use equality operators to see whether or not lists are `>`, `<`, `>=`,
+`<=`, `==`, or `/=`. This only works with content that can actually compared.
+They are compared in *lexicographical* order. First, the heads are compared and if they are equal second element is compared, and following down till the end.
+```haskell
+Prelude> [1,2,3] < [1,3,2]
+True
+Prelude> [1,2,3] /= [1,2,3]
+False
+Prelude> [1,2,3] >= [1,1,4]
+True
+```
+
+#### List Functions
+Here, we will have a small subset of the laundry list of functions that [Learn You a Haskell For Great Good!](http://learnyouahaskell.com/starting-out#babys-first-functions) has
+mentioned about lists!
+
+Let's just say we have a list `[1,2,3,4,5,6]` through all of these examples.
+
+`head` - takes a list and returns its head. (i.e. the list's first element)
+```haskell
+Prelude> head [1,2,3,4,5,6]
+1
+```
+`last` - takes a list and returns the last element.
+```haskell
+Prelude> last [1,2,3,4,5,6]
+6
+```
+`init` - takes a list and returns everything but the last element.
+```haskell
+Prelude> init [1,2,3,4,5,6]
+[1,2,3,4,5]
+```
+`tail` - takes a list and returns its tail. (i.e. takes all of the list but the head)
+```haskell
+Prelude> tail [1,2,3,4,5,6]
+[2,3,4,5,6]
+```
+`length` - *surprise*, takes a list and returns the length of it.
+```haskell
+Prelude> length [1,2,3,4,5,6]
+6
+```
+`maximum` - returns the maximum from the list.
+```haskell
+Prelude> maximum [1,2,3,4,5,6]
+6
+```
+`minimum` - returns the minimum from the list.
+```haskell
+Prelude> minimum [1,2,3,4,5,6]
+1
+```
+`sum` - computes the sum from a list of numbers.
+```haskell
+Prelude> sum [1,2,3,4,5,6]
+21
+```
+`product` - computes the product from a list of numbers.
+```haskell
+Prelude> product [1,2,3,4,5,6]
+720
+```
+
+#### Ranges
+As you can see before, writing out lists that have either an
+ascending/descending order is repetitive and time consuming. That's why Haskell
+is lovely and allows you to just say what the beginning and end is (along with
+what kind of pattern you want) and it can fill the inbetween.
+
+```haskell
+Prelude> [1..15]
+[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+Prelude> [2,4..20]
+[2,4,6,8,10,12,14,16,18,20]
+Prelude> [1,3..20]
+[1,3,5,7,9,11,13,15,17,19]
+Prelude> ['a'..'z']
+"abcdefghijklmnopqrstuvwxyz"
+```
+
+
+##### Cooler List Functions
+To make some more cool lists you can utilize even more list functions.
+```haskell
+Prelude> take 10 [3,9..]
+[3,9,15,21,27,33,39,45,51,57]
+```
+```haskell
+Prelude> take 8 (cycle [0,1])
+[0,1,0,1,0,1,0,1]
+```
+```haskell
+Prelude> take 6 (repeat 10)
+[10,10,10,10,10,10]
+```
+
+However, with repeat, you could actually even shorten it more
+```haskell
+Prelude> replicate 6 10
+[10,10,10,10,10,10]
+```
+
+### List Comprehensions
