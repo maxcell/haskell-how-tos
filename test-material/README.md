@@ -14,8 +14,8 @@
     - [Ranges](#ranges)
       - [Cooler List Functions](#cooler-list-functions)
   3. [List Comprehensions](#list-comprehensions)
-  4. [Need to Know Functions](#need-to-know-functions)
-  5. Lambdas
+  4. [Need to Know Functions(WIP)](#need-to-know-functions)
+  5. [Lambdas](#lambdas)
   6. Abstract Data Types
     - Trees
 
@@ -371,3 +371,99 @@ and.......oops, I digress.
 
 
 ### Need to Know Functions
+
+`zip` - takes two lists and zips (interleave) them together. Basically, the two lists
+are combined into one with alternating elements from each list. Also, it is important
+to remember that zip truncates the longer list to match the length of the shorter one.
+```haskell
+Prelude> zip [1,2,3] ['a','b']
+[(1,'a'),(2,'b')]
+```
+Let's implement `zip` so we can see how it really works underneath.
+```haskell
+zip' :: [a] -> [b] -> [(a,b)]
+-- Note that this function definition is telling us that the two input lists can be
+either of the same type or different types. This is important because if you declare
+that both lists are of type a, you won't be able to zip a list of int and a list of
+char together.
+```
+```haskell
+zip' :: [a] -> [b] -> [(a,b)]
+zip' _ [] = []
+zip' [] _ = []
+-- Here we are saying that as long as there is an empty list, zip' will always return
+an empty list. This part here is the sole reason why the function zip "truncates" the
+longer list, because once you reach the end of the shorter list, you are zipping a 
+non-empty list with an empty list, which will always give you an empty list as a result.
+```
+```haskell
+zip' :: [a] -> [b] -> [(a,b)]
+zip' _ [] = []
+zip' [] _ = []
+zip' (x:xs) (y:ys) = (x,y):zip' xs ys
+-- Simple algorith. Taking out the first element from both lists, put them together in
+a tuple, and prepending it to the list that will be recursively created from the rest
+of the lists.
+```
+
+`zipWith` - takes in a function and two lists, and outputting a list of the result
+after applying the function to the two input lists. This works in almost the exact
+same way as the zip function, except for the additional input function that is applied
+to both lists.
+```haskell
+Prelude> zipWith (+) [1,2,3] [4,5,6,7]
+[5,7,9]
+```
+zipWith added the corresponding elements together and outputed one result list *[1+4,2+5,3+6]*
+Let's also implement zipWith to see how it works.
+```haskell
+zipWith' (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
+-- (a -> b -> c) in the first line is a function input that takes in a and b and returns
+c. In thise case, f took in x and y, which are the first element in both list, and performed
+tunction f on them, which in this case is the addition operation.
+```
+
+`map` - takes a function and a list, applies the function to every element within the list,
+and produce a new result list.
+```haskell
+Prelude> map (+3) [1,2,3,4]
+[4,5,6,7]
+```
+How does the function map works?
+```haskell
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
+map' f (x:xs) = f x : map' f xs
+-- Pretty simple. Similar to zipWith', map' takes in a function that takes in a and return b,
+and map' itself uses that function on list of type a to return list of type b, which means
+the resulting list is of whatever type the function f returns.
+```
+
+`filter` - takes a predicate and a list and returns the list of only the elements that
+satisfy the predicate. Before I synonymized predicate to condition, which is technically
+still true, but the actual Haskell definition for predicate is a function that tells whether
+something is true or not, so basically a function that returns a boolean value. The main thing
+here is that do not assume that predicates are only comparison conditions such as (<, >, etc.).
+Because predicates are functions, any function that returns a boolean value is a predicate.
+```haskell
+Prelude> filter (>5) [1..10]
+[6,7,8,9,10]
+Prelude> filter even [1..10]
+[2,4,6,8,10]
+```
+Of course, let's also take a look at the inner working of filter.
+```haskell
+filter' (a -> Bool) -> [a] -> [a]
+filter _ [] = []
+filter p (x:xs)
+  | p x       = x : filter' p xs
+  | otherwise = filter' p xs
+-- For the last pattern match, unlike with the previous functions that takes in a function,
+you would first have to check if the element x satisfy the predicate p, and if it does, then
+include x in the resulting list. Otherwise, discard x and continues.
+```
+
+### Lambdas
