@@ -15,9 +15,9 @@
     - [Ranges](#ranges)
       - [Cooler List Functions](#cooler-list-functions)
   3. [List Comprehensions (WIP)](#list-comprehensions)
-  3. Need to Know Functions
-  4. Lambdas
-  5. Abstract Data Types
+  4. [Need to Know Functions](#need-to-know-functions)
+  5. Lambdas
+  6. Abstract Data Types
     - Trees
 
 ### Baby Steps
@@ -318,3 +318,57 @@ Prelude> replicate 6 10
 ```
 
 ### List Comprehensions
+A comprehension is a way for you to create a more specific set out of a general
+set. Thus a list comprehension allows you to, in a sense, pick and choose a set
+of elements from a list(s) through the use of predicates, or conditions.
+
+A basic list comprehension for a set (list) that contains the first ten even
+number is
+```haskell
+Prelude> [x*2 | x <- [1..10]]
+[2,4,6,8,10,12,14,16,18,20]
+```
+where x is selected from the list [1..10], or a list that contains all the number
+from 1 to 10. And for every element within that list (which is bound to x), you
+double that element's value.
+
+Using the previous example, you can also add in predicates (conditions) to further
+narrow down your result. For example,
+```haskell
+Prelude> [x*2 | x <- [1..10], x*2 >= 10]
+[10,12,14,16,18,20]
+```
+will do the same thing as the previous comprehension, except that this time you
+are telling Haskell to only get the even numbers from 10 to 20.
+
+You can also include more than one predicate. If you want all the numbers from 1
+to 10 that are not 7, 8, 9 (because we don't want seven to eat nine), you'd do
+```haskell
+Prelude> [x | x <- [1..10], x /= 7, x /= 8, x /= 9]
+[1,2,3,4,5,6,10]
+```
+
+Not only can you have more than one predicate, you can also draw from multiple
+lists at the same time.
+```haskell
+Prelude> [x+y | x <- [10,20,30], y <- [30,20,10], x /= 20, y /= 20]
+[40,20,60,40]
+```
+What you see there is all the possible combination of x + y where x and y cannot
+be 20. *[10 + 30, 10 + 10, 30 + 30, 30 + 10]*
+
+Just one more, you're nearly done. Let's try creating a list comprehension that
+can separate a string of digits at the decimal point (taken from HW2).
+```haskell
+Prelude> let regex = "12.45"
+Prelude> [splitAt i regex | i <- [0..(length regex - 1)], regex !! i == '.']
+[("12", ".45")]
+```
+Awesome! Now you can do whatever you want with that result. You know, like taking
+the head of the resulting array, which results in a tuple, which you can then take
+the fst and snd value of the tuple, discard the decimal point by taking the tail of
+the snd tuple, reversing the value, and then checking them both for superfluous 0's
+and.......oops, I digress.
+
+
+### Need to Know Functions
