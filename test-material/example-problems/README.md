@@ -12,7 +12,7 @@ pool in any way you can!
 ### Problem 1
 [*Source*](https://www.hackerrank.com/challenges/fp-filter-positions-in-a-list) - 
 Using the given function signature, write a function that takes in a
-list of `N` integers and return a new list removing the **even**-indexed
+list of `N` integers and return a new list removing the **odd**-indexed
 elements.
 
 For example, given the list, `[3,2,5,10,2]`, we expect to see `[3,5,2]`.
