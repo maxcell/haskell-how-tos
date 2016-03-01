@@ -1,5 +1,4 @@
-# Haskell Prep Material
-## Work in Progress
+# Haskell Prep Material (WIP)
 
 ## Table of Contents
 - Test 1
@@ -14,7 +13,7 @@
     - [List Functions](#list-functions)
     - [Ranges](#ranges)
       - [Cooler List Functions](#cooler-list-functions)
-  3. [List Comprehensions (WIP)](#list-comprehensions)
+  3. [List Comprehensions](#list-comprehensions)
   4. [Need to Know Functions](#need-to-know-functions)
   5. Lambdas
   6. Abstract Data Types
@@ -339,7 +338,7 @@ Prelude> [x*2 | x <- [1..10], x*2 >= 10]
 [10,12,14,16,18,20]
 ```
 will do the same thing as the previous comprehension, except that this time you
-are telling Haskell to only get the even numbers from 10 to 20.
+are telling Haskell to only get the even numbers greater than or equal to 10.
 
 You can also include more than one predicate. If you want all the numbers from 1
 to 10 that are not 7, 8, 9 (because we don't want seven to eat nine), you'd do
