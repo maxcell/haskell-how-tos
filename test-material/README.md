@@ -383,18 +383,18 @@ Let's implement `zip` so we can see how it really works underneath.
 ```haskell
 zip' :: [a] -> [b] -> [(a,b)]
 -- Note that this function definition is telling us that the two input lists can be
-either of the same type or different types. This is important because if you declare
-that both lists are of type a, you won't be able to zip a list of int and a list of
-char together.
+-- either of the same type or different types. This is important because if you declare
+-- that both lists are of type a, you won't be able to zip a list of int and a list of
+-- char together.
 ```
 ```haskell
 zip' :: [a] -> [b] -> [(a,b)]
 zip' _ [] = []
 zip' [] _ = []
 -- Here we are saying that as long as there is an empty list, zip' will always return
-an empty list. This part here is the sole reason why the function zip "truncates" the
-longer list, because once you reach the end of the shorter list, you are zipping a 
-non-empty list with an empty list, which will always give you an empty list as a result.
+-- an empty list. This part here is the sole reason why the function zip "truncates" the
+-- longer list, because once you reach the end of the shorter list, you are zipping a 
+-- non-empty list with an empty list, which will always give you an empty list as a result.
 ```
 ```haskell
 zip' :: [a] -> [b] -> [(a,b)]
@@ -402,8 +402,8 @@ zip' _ [] = []
 zip' [] _ = []
 zip' (x:xs) (y:ys) = (x,y):zip' xs ys
 -- Simple algorith. Taking out the first element from both lists, put them together in
-a tuple, and prepending it to the list that will be recursively created from the rest
-of the lists.
+-- a tuple, and prepending it to the list that will be recursively created from the rest
+-- of the lists.
 ```
 
 `zipWith` - takes in a function and two lists, and outputting a list of the result
@@ -422,8 +422,8 @@ zipWith' _ [] _ = []
 zipWith' _ _ [] = []
 zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
 -- (a -> b -> c) in the first line is a function input that takes in a and b and returns
-c. In thise case, f took in x and y, which are the first element in both list, and performed
-tunction f on them, which in this case is the addition operation.
+-- c. In thise case, f took in x and y, which are the first element in both list, and
+-- performed function f on them, which in this case is the addition operation.
 ```
 
 `map` - takes a function and a list, applies the function to every element within the list,
@@ -438,8 +438,8 @@ map' :: (a -> b) -> [a] -> [b]
 map' _ [] = []
 map' f (x:xs) = f x : map' f xs
 -- Pretty simple. Similar to zipWith', map' takes in a function that takes in a and return b,
-and map' itself uses that function on list of type a to return list of type b, which means
-the resulting list is of whatever type the function f returns.
+-- and map' itself uses that function on list of type a to return list of type b, which means
+-- the resulting list is of whatever type the function f returns.
 ```
 
 `filter` - takes a predicate and a list and returns the list of only the elements that
@@ -462,8 +462,8 @@ filter p (x:xs)
   | p x       = x : filter' p xs
   | otherwise = filter' p xs
 -- For the last pattern match, unlike with the previous functions that takes in a function,
-you would first have to check if the element x satisfy the predicate p, and if it does, then
-include x in the resulting list. Otherwise, discard x and continues.
+-- you would first have to check if the element x satisfy the predicate p, and if it does, then
+-- include x in the resulting list. Otherwise, discard x and continues.
 ```
 
 ### Lambdas
