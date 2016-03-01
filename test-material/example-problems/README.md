@@ -10,8 +10,8 @@ pool in any way you can!
 
 
 ### Problem 1
-[*Source*](https://www.hackerrank.com/challenges/fp-filter-positions-in-a-list)
-- Using the given function signature, write a function that takes in a
+[*Source*](https://www.hackerrank.com/challenges/fp-filter-positions-in-a-list) - 
+Using the given function signature, write a function that takes in a
 list of `N` integers and return a new list removing the **even**-indexed
 elements.
 
